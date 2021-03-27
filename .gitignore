@@ -25,3 +25,5 @@ hs_err_pid*
 /metopt.iml
 /.idea/
 /tex/
+/auxil/lab1.aux
+/auxil/lab1.out

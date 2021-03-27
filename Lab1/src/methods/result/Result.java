@@ -2,7 +2,6 @@ package methods.result;
 
 
 import java.util.List;
-import java.util.stream.Stream;
 
 public class Result<R extends IterationResult> {
     private final double point;
@@ -29,10 +28,23 @@ public class Result<R extends IterationResult> {
         return iterations;
     }
 
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(
+                String.format("Результат: точка: [ %.10f ], value [ %.10f ]\nКоличество итераций: %d\n",
+                        getPoint(),
+                        getValue(),
+                        getIterations().size())
+        );
+        for (IterationResult result : getIterations()) {
+            stringBuilder.append(result.asTable()).append('\n');
+        }
+        return stringBuilder.toString();
+    }
     public String asTable() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(
-                String.format("Результат: точка: [ %.10f ], значение: [ %.10f ]\n\nКоличество итераций: %d\n\n",
+                String.format("Результат: точка: [ %.10f ], value [ %.10f ]\nКоличество итераций: %d\n",
                         getPoint(),
                         getValue(),
                         getIterations().size())
@@ -45,18 +57,4 @@ public class Result<R extends IterationResult> {
         stringBuilder.append("\\hline\n\\end{tabular}");
         return stringBuilder.toString();
     }
-
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(
-                String.format("Final segment: [ %.16f ], value [ %.16f ]\nIterations count: %d\n",
-                        getPoint(),
-                        getValue(),
-                        getIterations().size()));
-        for (IterationResult result : getIterations()) {
-            stringBuilder.append(result).append('\n');
-        }
-        return stringBuilder.toString();
-    }
-
 }

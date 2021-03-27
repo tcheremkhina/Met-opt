@@ -1,8 +1,6 @@
 package methods.result;
 
 
-import java.util.stream.Stream;
-
 public class ParabolaIterationResult implements IterationResult {
     private final double x1;
     private final double x2;
@@ -58,7 +56,6 @@ public class ParabolaIterationResult implements IterationResult {
     public double getfMinX() {
         return fMinX;
     }
-
 
     public String tableArgs() {
         return "X1 & X2 & X3 & F(X1) & F(X2) & F(X3) & Minimal X & F(Minimal) & X3 - X1";

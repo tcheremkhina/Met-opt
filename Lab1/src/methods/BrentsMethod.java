@@ -1,6 +1,5 @@
 package methods;
 
-import methods.result.DefaultIterationResult;
 import methods.result.IterationResult;
 import methods.result.ParabolaIterationResult;
 import methods.result.Result;
@@ -37,15 +36,14 @@ public class BrentsMethod implements Method<IterationResult> {
 //            throw new RuntimeException("Can't find x2");
 //        }
         double minX = ParabolaMethod.countMinX(x1, x2, x3, f1, f2, f3);
-        double lastX = minX, prePreLastRange = Double.POSITIVE_INFINITY,
-                preLast = prePreLastRange, last = prePreLastRange;
+        double lastX = minX,
+                preLast = Double.POSITIVE_INFINITY, last = preLast;
         double fMinX = f.applyAsDouble(minX);
         results.add(new ParabolaIterationResult(x1, x2, x3, minX, f1, f2, f3, fMinX));
         while (true) {
             boolean isGSS = false;
             if (isBadChoose(x1, x3, x2, minX, preLast)) {
                 results.add(new ParabolaIterationResult(x1, x2, x3, minX, f1, f2, f3, fMinX));
-                results.add(new ParabolaIterationResult(-1, -1, -1, -1, -1, -1, -1, -1));
                 isGSS = true;
                 System.out.println((x2 + R1 * (x3 - x2)) + " " + (x2 - R1 * (x2 - x1)));
                 if (compare((x1 + x3) / 2, x2)) {
@@ -55,9 +53,6 @@ public class BrentsMethod implements Method<IterationResult> {
                 }
                 fMinX = f.applyAsDouble(minX);
                 System.out.println(minX + " " + fMinX);
-//                results.add(new DefaultIterationResult(x1, x3, x2, minX, f2, fMinX));
-            } else {
-//                results.add(new ParabolaIterationResult(x1, x2, x3, minX, f1, f2, f3, fMinX));
             }
             if (compare(x2, minX)) {
                 if (compare(fMinX, f2)) {
@@ -92,8 +87,6 @@ public class BrentsMethod implements Method<IterationResult> {
             }
             results.add(new ParabolaIterationResult(x1, x2, x3, minX, f1, f2, f3, fMinX));
             delta = abs(minX - lastX);
-
-            prePreLastRange = preLast;
             preLast = last;
             last = delta;
             lastX = minX;
