@@ -1,31 +1,33 @@
 package elements;
 
 import java.util.List;
-import java.util.function.DoubleUnaryOperator;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class MyFunction {
-    Function<List<Double>, Double> function;
-    List<Function<List<Double>, Double>> gradient;
+    private final int size;
+    private final List<List<Double>> matrixA;
+    private final Vector vectorB;
+    private final Double c;
 
-    public MyFunction(
-            final Function<List<Double>, Double> function,
-            final List<Function<List<Double>, Double>> gradient
-    ) {
-        this.function = function;
-        this.gradient = gradient;
+    public MyFunction(final int size, final List<List<Double>> matrixA, final List<Double> vectorB, final Double c) {
+        this.size = size;
+        this.matrixA = matrixA;
+        this.vectorB = new Vector(vectorB);
+        this.c = c;
     }
 
     public Double applyFunction(final Vector value) {
-        return function.apply(value.getPoint());
+        double val = c;
+        for (int i = 0; i < size; ++i) {
+            for (int j = 0; j < size; ++j) {
+                val += value.get(i) * value.get(j) * matrixA.get(i).get(j);
+            }
+            val += vectorB.get(i) * value.get(i);
+        }
+        return val;
     }
 
     public Vector applyGradient(final Vector vector) {
-        return new Vector(
-                gradient.stream()
-                        .map(function -> function.apply(vector.getPoint()))
-                        .collect(Collectors.toList())
-        );
+        return vectorB.add(vector.multiplyByMatrix(matrixA));
     }
 }

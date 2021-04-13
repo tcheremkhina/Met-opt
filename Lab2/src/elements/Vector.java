@@ -2,7 +2,6 @@ package elements;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.DoubleUnaryOperator;
 import java.util.stream.Collectors;
 
 public class Vector {
@@ -16,6 +15,14 @@ public class Vector {
         return point;
     }
 
+    public int size() {
+        return point.size();
+    }
+
+    public Double get(final int index) {
+        return point.get(index);
+    }
+
     public Vector multiply(final double mul) {
         return new Vector(
                 point.stream()
@@ -24,16 +31,49 @@ public class Vector {
         );
     }
 
-    public Vector subtract(final Vector vector) {
+    public Vector negate() {
         final List<Double> value = new ArrayList<>();
         for (int i = 0; i < point.size(); ++i) {
+            value.add(-point.get(i));
+        }
+        return new Vector(value);
+    }
+
+    public Vector subtract(final Vector vector) {
+        final List<Double> value = new ArrayList<>();
+        for (int i = 0; i < size(); ++i) {
             value.add(point.get(i) - vector.point.get(i));
         }
         return new Vector(value);
     }
 
+    public Vector add(final Vector vector) {
+        final List<Double> value = new ArrayList<>();
+        for (int i = 0; i < size(); ++i) {
+            value.add(point.get(i) + vector.point.get(i));
+        }
+        return new Vector(value);
+    }
+
+    public Vector multiplyByMatrix(final List<List<Double>> matrix) {
+        final List<Double> data = new ArrayList<>();
+        for (int i = 0; i < size(); ++i) {
+            double value = 0;
+            for (int j = 0; j < size(); ++j) {
+                value += point.get(j) * matrix.get(i).get(j);
+            }
+            data.add(value);
+        }
+        return new Vector(data);
+    }
+
+
     public double abs() {
         return Math.sqrt(point.stream().reduce(0., (arg1, arg2) -> arg1 + arg2 * arg2));
+    }
+
+    public double absSqr() {
+        return point.stream().reduce(0., (arg1, arg2) -> arg1 + arg2 * arg2);
     }
 
     @Override
