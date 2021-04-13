@@ -1,7 +1,6 @@
 package elements;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MyFunction {
     private final int size;

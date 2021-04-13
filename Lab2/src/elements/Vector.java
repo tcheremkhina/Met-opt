@@ -33,8 +33,8 @@ public class Vector {
 
     public Vector negate() {
         final List<Double> value = new ArrayList<>();
-        for (int i = 0; i < point.size(); ++i) {
-            value.add(-point.get(i));
+        for (final Double aDouble : point) {
+            value.add(-aDouble);
         }
         return new Vector(value);
     }
@@ -50,7 +50,7 @@ public class Vector {
     public Vector add(final Vector vector) {
         final List<Double> value = new ArrayList<>();
         for (int i = 0; i < size(); ++i) {
-            value.add(point.get(i) + vector.point.get(i));
+            value.add(point.get(i) + vector.get(i));
         }
         return new Vector(value);
     }
@@ -60,7 +60,11 @@ public class Vector {
         for (int i = 0; i < size(); ++i) {
             double value = 0;
             for (int j = 0; j < size(); ++j) {
-                value += point.get(j) * matrix.get(i).get(j);
+                if (i == j) {
+                    value += 2. * point.get(j) * matrix.get(i).get(j);
+                } else {
+                    value += point.get(j) * matrix.get(i).get(j);
+                }
             }
             data.add(value);
         }
@@ -78,8 +82,8 @@ public class Vector {
 
     @Override
     public String toString() {
-        return "Vector{" +
-                "point=" + point +
-                '}';
+        return "Point{" +
+                point.stream().map(d -> String.format("%.7f", d)).collect(Collectors.joining("; ")) +
+                "}";
     }
 }
