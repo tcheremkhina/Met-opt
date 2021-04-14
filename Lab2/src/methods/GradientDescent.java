@@ -22,15 +22,18 @@ public class GradientDescent {
 //        System.out.println("point: " + x);
 //        System.out.println("gradient: " + gradientFX);
 //        System.out.println("gradient abs: " + gradientFX.abs());
-        while (alpha2 != 0 && epsilon < gradientFX.abs() && sch < 10_000) {
+        while (alpha2 > 1e-9 && epsilon < gradientFX.abs() && sch < 10_000) {
+            alpha2 = alpha;
+            sch++;
             do {
-                sch++;
                 y = x.subtract(gradientFX.multiply(alpha2));
                 fy = function.applyFunction(y);
                 if (fy >= fx) {
                     alpha2 /= 2;
+//                    System.out.println(String.format("y{ %s } and x{ %s }", y, x));
+//                    System.out.println(String.format("fy{ %.10f } >= fx{ %.10f }", fy, fx));
                 }
-                if (alpha2 == 0) {
+                if (alpha2 < 1e-9) {
                     System.out.println("\nalpha is 0\n");
                     break;
                 }
@@ -42,6 +45,7 @@ public class GradientDescent {
 //            System.out.println("point: " + x);
 //            System.out.println("gradient abs: " + gradientFX.abs());
 //            System.out.println("gradient: " + gradientFX);
+//            System.out.println();
         }
         System.out.println("\niterations count: " + sch);
         System.out.println(String.format("Result:\n%s \nval: %.10f\n", x, fx));

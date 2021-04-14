@@ -29,7 +29,7 @@ public class Dichotomy {
             }
             e = (b - a) / 2;
         }
-        return (a + b) / 2;
+        return compare(f.applyAsDouble(a), f.applyAsDouble(b)) ? b : a;
     }
 
 }

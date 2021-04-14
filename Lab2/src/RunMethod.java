@@ -46,22 +46,22 @@ public class RunMethod {
 
 
     public static void main(final String[] args) {
-        final GradientDescent gradientDescent = new GradientDescent(0.01, 5);
+        final GradientDescent gradientDescent = new GradientDescent(0.001, 5);
         final FastestDescent fastestDescent = new FastestDescent(0.01, 1000);
         final ConjugateGradientMethod cgMethod = new ConjugateGradientMethod(0.01, 1000);
-//        final MyFunction function = new NormalForm(
-//                2,
-//                List.of(List.of(211., -420.), List.of(0., 211.)),
-//                List.of(-192., 50.),
-//                13.
-//        );
         final MyFunction function = new NormalForm(
                 2,
-                List.of(List.of(3., 2.), List.of(0., 8.)),
-                List.of(5., 0.),
+                List.of(List.of(211., -210.), List.of(-210., 211.)),
+                List.of(-192., 50.),
                 0.
         );
-        final int size = 2;
+//        final MyFunction function = new NormalForm(
+//                2,
+//                List.of(List.of(3., 2.), List.of(0., 8.)),
+//                List.of(5., 0.),
+//                0.
+//        );
+//        final int size = 10;
 //        final List<Double> matrix = generateVector(size);
 //        final List<Double> vector = generateVector(size);
 //        System.out.println(matrix);
@@ -72,7 +72,7 @@ public class RunMethod {
 //                vector,
 //                0.
 //        );
-        final Vector x = new Vector(generateVector(size));
+        final Vector x = new Vector(generateVector(2));
         System.out.println("start vector: " + x);
         gradientDescent.calc(function, x);
         System.out.println("\n\n\n");

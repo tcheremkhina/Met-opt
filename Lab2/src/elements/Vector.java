@@ -24,10 +24,9 @@ public class Vector {
     }
 
     public Vector multiply(final double mul) {
-        return new Vector(
-                point.stream()
-                        .map(value -> value * mul)
-                        .collect(Collectors.toList())
+        return new Vector(point.stream()
+                .map(value -> value * mul)
+                .collect(Collectors.toList())
         );
     }
 
