@@ -27,6 +27,8 @@ public class NormalForm implements MyFunction {
     }
 
     public Vector applyGradient(final Vector vector) {
-        return vectorB.add(vector.multiplyByMatrix(matrixA));
+        return vectorB.add(vector.multiplyByMatrix(matrixA)
+                .multiply(2)
+        );
     }
 }

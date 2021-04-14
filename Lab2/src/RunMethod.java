@@ -35,23 +35,35 @@ public class RunMethod {
         return list;
     }
 
-    public static List<Double> generateVector(final int size) {
+    public static List<Double> generateMatrixVector(final int size, final int max) {
+        final Random random = new Random();
+        final List<Double> list = new ArrayList<>(size);
+        list.add(1.);
+        for (int i = 0; i < size - 2; ++i) {
+            list.add((double) random.nextInt(max));
+        }
+        list.add((double) max);
+        return list;
+    }
+
+    public static List<Double> generateVector(final int size, final int max) {
         final Random random = new Random();
         final List<Double> list = new ArrayList<>(size);
         for (int i = 0; i < size; ++i) {
-            list.add((double) random.nextInt(100));
+            list.add((double) random.nextInt(max));
         }
         return list;
     }
 
 
     public static void main(final String[] args) {
-        final GradientDescent gradientDescent = new GradientDescent(0.001, 5);
+        final GradientDescent gradientDescent = new GradientDescent(0.01, 4);
         final FastestDescent fastestDescent = new FastestDescent(0.01, 1000);
         final ConjugateGradientMethod cgMethod = new ConjugateGradientMethod(0.01, 1000);
         final MyFunction function = new NormalForm(
                 2,
-                List.of(List.of(211., -210.), List.of(-210., 211.)),
+                List.of(List.of(211., -210.),
+                        List.of(-210., 211.)),
                 List.of(-192., 50.),
                 0.
         );
@@ -62,7 +74,7 @@ public class RunMethod {
 //                0.
 //        );
 //        final int size = 10;
-//        final List<Double> matrix = generateVector(size);
+//        final List<Double> matrix = generateMatrixVector(size, size);
 //        final List<Double> vector = generateVector(size);
 //        System.out.println(matrix);
 //        System.out.println(vector);
@@ -72,7 +84,8 @@ public class RunMethod {
 //                vector,
 //                0.
 //        );
-        final Vector x = new Vector(generateVector(2));
+//        final Vector x = new Vector(generateVector(2, 100));
+        final Vector x = new Vector(List.of(100., 100.));
         System.out.println("start vector: " + x);
         gradientDescent.calc(function, x);
         System.out.println("\n\n\n");

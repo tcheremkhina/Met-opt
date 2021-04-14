@@ -59,11 +59,7 @@ public class Vector {
         for (int i = 0; i < size(); ++i) {
             double value = 0;
             for (int j = 0; j < size(); ++j) {
-                if (i == j) {
-                    value += 2. * point.get(j) * matrix.get(i).get(j);
-                } else {
-                    value += point.get(j) * matrix.get(i).get(j);
-                }
+                value += get(j) * matrix.get(i).get(j);
             }
             data.add(value);
         }

@@ -35,6 +35,8 @@ public class GradientDescent {
                 }
                 if (alpha2 < 1e-9) {
                     System.out.println("\nalpha is 0\n");
+                    y = x;
+                    fy = fx;
                     break;
                 }
             } while (fy >= fx);
