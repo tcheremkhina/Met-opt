@@ -1,6 +1,7 @@
 package methods;
 
 import elements.MyFunction;
+import elements.NormalForm;
 import elements.Vector;
 
 import java.util.function.DoubleUnaryOperator;
@@ -16,7 +17,7 @@ public class ConjugateGradientMethod {
         Vector gradientFX = function.applyGradient(x);
         Double fx = null;
         Vector p = function.applyGradient(x).negate();
-        System.out.println("gradient abs: " + gradientFX.abs());
+//        System.out.println("gradient abs: " + gradientFX.abs());
         for (int cnt = 0; cnt <= x.getPoint().size(); cnt++) {
             final Vector finalGradientFX = gradientFX;
             final Vector finalX = x;
@@ -32,10 +33,10 @@ public class ConjugateGradientMethod {
             p = pNext;
             fx = function.applyFunction(x);
             gradientFX = function.applyGradient(x);
-            System.out.println(String.format("%s val: %.10f", x, fx));
-            System.out.println("gradient abs: " + gradientFX.abs());
+//            System.out.println(String.format("%s val: %.10f", x, fx));
+//            System.out.println("gradient abs: " + gradientFX.abs());
         }
         System.out.println("\niterations count: " + x.getPoint().size());
-        System.out.println(String.format("Result:\n%s val: %.10f", x, fx));
+        System.out.println(String.format("Result:\n%s \nval: %.10f", x, fx));
     }
 }
