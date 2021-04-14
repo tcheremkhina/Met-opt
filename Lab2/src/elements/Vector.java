@@ -73,7 +73,7 @@ public class Vector {
 
 
     public double abs() {
-        return Math.sqrt(point.stream().reduce(0., (arg1, arg2) -> arg1 + arg2 * arg2));
+        return Math.sqrt(absSqr());
     }
 
     public double absSqr() {

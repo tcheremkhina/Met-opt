@@ -48,36 +48,36 @@ public class RunMethod {
     public static void main(final String[] args) {
         final GradientDescent gradientDescent = new GradientDescent(0.01, 5);
         final FastestDescent fastestDescent = new FastestDescent(0.01, 1000);
-        final ConjugateGradientMethod kgMethod = new ConjugateGradientMethod(1000);
+        final ConjugateGradientMethod cgMethod = new ConjugateGradientMethod(0.01, 1000);
 //        final MyFunction function = new NormalForm(
 //                2,
 //                List.of(List.of(211., -420.), List.of(0., 211.)),
 //                List.of(-192., 50.),
 //                13.
 //        );
-//        final MyFunction function = new NormalForm(
-//                2,
-//                List.of(List.of(3., 2.), List.of(0., 8.)),
-//                List.of(5., 0.),
-//                0.
-//        );
-        final int size = 2;
-        final List<Double> matrix = generateVector(size);
-        final List<Double> vector = generateVector(size);
-        System.out.println(matrix);
-        System.out.println(vector);
-        final MyFunction function = new DiagonalForm(
-                size,
-                matrix,
-                vector,
+        final MyFunction function = new NormalForm(
+                2,
+                List.of(List.of(3., 2.), List.of(0., 8.)),
+                List.of(5., 0.),
                 0.
         );
+        final int size = 2;
+//        final List<Double> matrix = generateVector(size);
+//        final List<Double> vector = generateVector(size);
+//        System.out.println(matrix);
+//        System.out.println(vector);
+//        final MyFunction function = new DiagonalForm(
+//                size,
+//                matrix,
+//                vector,
+//                0.
+//        );
         final Vector x = new Vector(generateVector(size));
         System.out.println("start vector: " + x);
         gradientDescent.calc(function, x);
         System.out.println("\n\n\n");
         fastestDescent.calc(function, x);
         System.out.println("\n\n\n");
-        kgMethod.calc(function, x);
+        cgMethod.calc(function, x);
     }
 }

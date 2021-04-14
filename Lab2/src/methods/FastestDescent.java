@@ -17,17 +17,17 @@ public class FastestDescent {
 
     public void calc(final MyFunction function, Vector x) {
         Vector gradientFX = function.applyGradient(x);
+        final Dichotomy method = new Dichotomy(epsilon);
         Double fx = null;
         int sch = 0;
 //        System.out.println("gradient abs: " + gradientFX.abs());
         double alpha = epsilon + 1;
-        while (epsilon < gradientFX.abs() && sch < 1_000) {
+        while (epsilon < gradientFX.abs() && sch < 10_000) {
             sch++;
             final Vector finalGradientFX = gradientFX;
             final Vector finalX = x;
             final DoubleUnaryOperator fAlpha = alpha1 ->
                     function.applyFunction(finalX.subtract(finalGradientFX.multiply(alpha1)));
-            final Dichotomy method = new Dichotomy(epsilon);
             alpha = method.calc(fAlpha, 0, maxAlpha);
 //            System.out.println("Alpha: " + alpha);
             x = x.subtract(gradientFX.multiply(alpha));
