@@ -29,7 +29,6 @@ public class NormalForm implements MyFunction {
 
     public Vector applyGradient(final Vector vector) {
         return vectorB.add(multiplyAByVector(vector)
-                .multiply(2)
         );
     }
 
@@ -38,7 +37,7 @@ public class NormalForm implements MyFunction {
         for (int i = 0; i < size; ++i) {
             double value = 0;
             for (int j = 0; j < size; ++j) {
-                value += vector.get(j) * matrixA.get(i).get(j);
+                value += 2 * vector.get(j) * matrixA.get(i).get(j);
             }
             data.add(value);
         }
