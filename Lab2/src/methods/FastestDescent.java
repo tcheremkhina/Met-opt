@@ -9,12 +9,12 @@ import java.util.function.DoubleUnaryOperator;
 public class FastestDescent {
     private final double epsilon;
     private final double maxAlpha;
-    private final Dichotomy method;
+    private final BrentsMethod method;
 
     public FastestDescent(final double epsilon, final double maxAlpha) {
         this.epsilon = epsilon;
         this.maxAlpha = maxAlpha;
-        method = new Dichotomy(1e-9);
+        method = new BrentsMethod(1e-9);
     }
 
     public int calc(final MyFunction function, Vector x) {
@@ -23,8 +23,6 @@ public class FastestDescent {
         Vector lastX = x;
         double lastFX = 0;
         int sch = 0;
-//        System.out.println("gradient abs: " + gradientFX.abs());
-//        System.out.println("gradient: " + gradientFX);
         double alpha;
         while (epsilon < gradientFX.abs() && sch < 10_000
                 && (sch == 0
@@ -35,25 +33,20 @@ public class FastestDescent {
             final DoubleUnaryOperator fAlpha = alpha1 ->
                     function.applyFunction(finalX.subtract(finalGradientFX.multiply(alpha1)));
             alpha = method.calc(fAlpha, 0, maxAlpha);
-//            System.out.println("\n\nAlpha: " + alpha);
             lastX = x;
             lastFX = fx;
             x = finalX.subtract(finalGradientFX.multiply(alpha));
             fx = function.applyFunction(x);
             gradientFX = function.applyGradient(x);
             if (alpha == 0) {
-                System.out.println("alpha is 0");
-                System.out.println("\niterations count: " + sch);
-                System.out.println(String.format("Result:\n%s \nval: %.10f", x, fx));
+//                System.out.println("alpha is 0");
+//                System.out.println("\niterations count: " + sch);
+//                System.out.println(String.format("Result:\n%s \nval: %.10f", x, fx));
                 return sch;
             }
-//            System.out.println("val: "+ fx);
-//            System.out.println("point: " + x);
-//            System.out.println("gradient abs: " + gradientFX.abs());
-//            System.out.println("gradient: " + gradientFX);
         }
-        System.out.println("\niterations count: " + sch);
-        System.out.println(String.format("Result:\n%s \nval: %.10f", x, fx));
+//        System.out.println("\niterations count: " + sch);
+//        System.out.println(String.format("Result:\n%s \nval: %.10f", x, fx));
         return sch;
     }
 }

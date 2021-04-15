@@ -84,10 +84,10 @@ public class RunMethod {
     public static void main(final String[] args) {
         final GradientDescent gradientDescent = new GradientDescent(0.01, 1);
         final FastestDescent fastestDescent = new FastestDescent(0.01, 1000);
-        final ConjugateGradientMethod cgMethod = new ConjugateGradientMethod(0.01, 1000);
+        final ConjugateGradientMethod cgMethod = new ConjugateGradientMethod(0.01);
         for (int maxV = 100; maxV <= 2000; maxV += 100) {
             int iterations = 0;
-            for (int i = 0; i < 10; ++i) {
+            for (int i = 0; i < 1; ++i) {
                 final int size = 1000;
                 final int maxValue = maxV;
                 final List<Double> matrix = generateMatrixVector(size, maxValue);
@@ -103,8 +103,8 @@ public class RunMethod {
                 final Vector x = new Vector(generateVector(size, 1000));
 //            System.out.println("start vector: " + x);
 //                gradientDescent.calc(function, x);
-//                fastestDescent.calc(function, x);
-                final int add = cgMethod.calc(function, x);
+                final int add = fastestDescent.calc(function, x);
+//                final int add = cgMethod.calc(function, x);
                 if (add == 10_000) {
                     i--;
                     System.out.println(10000);
@@ -114,9 +114,9 @@ public class RunMethod {
                 }
             }
 
-            System.out.println("Max value: " + maxV);
-            System.out.println("Iterations avg: " + (iterations / 10));
-            System.out.println("\n");
+//            System.out.println("Max value: " + maxV);
+//            System.out.println("Iterations avg: " + (iterations / 3));
+//            System.out.println("\n");
         }
     }
 }
