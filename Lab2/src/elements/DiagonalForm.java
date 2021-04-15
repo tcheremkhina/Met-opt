@@ -35,4 +35,14 @@ public class DiagonalForm implements MyFunction {
         }
         return new Vector(data);
     }
+
+    @Override
+    public Vector multiplyAByVector(final Vector vector) {
+        final List<Double> data = new ArrayList<>();
+        for (int i = 0; i < size; ++i) {
+            final double value = 2 * vector.get(i) * matrixA.get(i);
+            data.add(value);
+        }
+        return new Vector(data);
+    }
 }

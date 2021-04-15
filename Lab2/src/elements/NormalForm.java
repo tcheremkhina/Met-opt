@@ -1,5 +1,6 @@
 package elements;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NormalForm implements MyFunction {
@@ -27,8 +28,20 @@ public class NormalForm implements MyFunction {
     }
 
     public Vector applyGradient(final Vector vector) {
-        return vectorB.add(vector.multiplyByMatrix(matrixA)
+        return vectorB.add(multiplyAByVector(vector)
                 .multiply(2)
         );
+    }
+
+    public Vector multiplyAByVector(final Vector vector) {
+        final List<Double> data = new ArrayList<>();
+        for (int i = 0; i < size; ++i) {
+            double value = 0;
+            for (int j = 0; j < size; ++j) {
+                value += vector.get(j) * matrixA.get(i).get(j);
+            }
+            data.add(value);
+        }
+        return new Vector(data);
     }
 }

@@ -54,18 +54,13 @@ public class Vector {
         return new Vector(value);
     }
 
-    public Vector multiplyByMatrix(final List<List<Double>> matrix) {
-        final List<Double> data = new ArrayList<>();
+    public double scalar(final Vector vector) {
+        double val = 0;
         for (int i = 0; i < size(); ++i) {
-            double value = 0;
-            for (int j = 0; j < size(); ++j) {
-                value += get(j) * matrix.get(i).get(j);
-            }
-            data.add(value);
+            val += get(i) * vector.get(i);
         }
-        return new Vector(data);
+        return val;
     }
-
 
     public double abs() {
         return Math.sqrt(absSqr());

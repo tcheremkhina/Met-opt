@@ -1,7 +1,6 @@
 package methods;
 
 import elements.MyFunction;
-import elements.NormalForm;
 import elements.Vector;
 
 public class GradientDescent {
@@ -13,17 +12,25 @@ public class GradientDescent {
         this.alpha = alpha;
     }
 
-    public void calc(final MyFunction function, Vector x) {
-        Vector y, gradientFX = function.applyGradient(x);
-        Double fy, fx = function.applyFunction(x);
+    public int calc(final MyFunction function, Vector x) {
+        Vector gradientFX = function.applyGradient(x);
+        Vector y = null;
+        Double fx = function.applyFunction(x);
+        Double fy;
+        Vector lastX = x;
+        double lastFX = fx;
         int sch = 0;
         double alpha2 = alpha;
 //        System.out.println("val: "+ fx);
 //        System.out.println("point: " + x);
 //        System.out.println("gradient: " + gradientFX);
 //        System.out.println("gradient abs: " + gradientFX.abs());
-        while (alpha2 > 1e-9 && epsilon < gradientFX.abs() && sch < 10_000) {
-            alpha2 = alpha;
+        while (alpha2 > 1e-9 && epsilon < gradientFX.abs()
+                && (y == null ||
+                (Math.abs(fx - lastFX) > epsilon
+                        && lastX.subtract(x).abs() > epsilon
+                        && sch < 10_000))) {
+//            alpha2 = alpha;
             sch++;
             do {
                 y = x.subtract(gradientFX.multiply(alpha2));
@@ -40,6 +47,8 @@ public class GradientDescent {
                     break;
                 }
             } while (fy >= fx);
+            lastFX = fx;
+            lastX = x;
             x = y;
             fx = fy;
             gradientFX = function.applyGradient(x);
@@ -51,5 +60,6 @@ public class GradientDescent {
         }
         System.out.println("\niterations count: " + sch);
         System.out.println(String.format("Result:\n%s \nval: %.10f\n", x, fx));
+        return sch;
     }
 }
