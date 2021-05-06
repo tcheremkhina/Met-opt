@@ -1,6 +1,7 @@
 package tests;
 
 import methods.GaussMethod;
+import methods.LUMaker;
 import tools.Table;
 import tools.TableImpl;
 
@@ -22,10 +23,14 @@ public class Tester {
     public static void main(final String[] args) {
         final Table table = new TableImpl(List.of(
                 arrayList(1., 2.),
-                arrayList(2., 2.)
+                arrayList(3., 2.)
         ));
+        printTable(table);
         final List<Double> b = arrayList(1., 3.);
-
-        GaussMethod.run(table, b);
+        final LUMaker luMaker = new LUMaker(2);
+        luMaker.run(table);
+        printTable(luMaker.getL());
+        printTable(luMaker.getU());
+//        GaussMethod.run(table, b);
     }
 }

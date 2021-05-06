@@ -20,21 +20,25 @@ public class LUMaker {
         return U;
     }
 
-
     public void run(final Table table) {
         L.set(0, 0, table.get(0, 0));
         U.set(0, 0, 1);
         for (int i = 1; i < table.size(); ++i) {
             U.set(i, i, 1);
-            double val = 0;
+
             for (int j = 0; j < i; ++j) {
-                L.set(i, j, table.get(i, j) - val);
-                val += L.get(i, j) * U.get(j, i);
-            }
-            val = 0;
-            for (int j = 0; j < i; ++j) {
+                double val = 0;
+                for (int k = 0; k < j; ++k) {
+                    val += L.get(j, k) * U.get(k, i);
+                }
                 U.set(j, i, (table.get(j, i) - val) / L.get(j, j));
-                val += L.get(j, j) * U.get(j, i);
+            }
+            for (int j = 0; j <= i; ++j) {
+                double val = 0;
+                for (int k = 0; k < j; ++k) {
+                    val += L.get(i, k) * U.get(k, j);
+                }
+                L.set(i, j, table.get(i, j) - val);
             }
         }
     }
