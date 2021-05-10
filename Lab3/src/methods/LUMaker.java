@@ -1,26 +1,14 @@
 package methods;
 
+import tests.Tester;
 import tools.Table;
 import tools.TableImpl;
 
 public class LUMaker {
-    private final Table L;
-    private final Table U;
 
-    public LUMaker(final int n) {
-        L = new TableImpl(n);
-        U = new TableImpl(n);
-    }
-
-    public Table getL() {
-        return L;
-    }
-
-    public Table getU() {
-        return U;
-    }
-
-    public void run(final Table table) {
+    public static LUTable run(final Table table) {
+        final Table L = new TableImpl(table.size());
+        final Table U = new TableImpl(table.size());
         L.set(0, 0, table.get(0, 0));
         U.set(0, 0, 1);
         for (int i = 1; i < table.size(); ++i) {
@@ -41,5 +29,6 @@ public class LUMaker {
                 L.set(i, j, table.get(i, j) - val);
             }
         }
+        return new LUTable(L, U);
     }
 }

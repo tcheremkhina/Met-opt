@@ -15,7 +15,6 @@ public class GaussMethod {
         list.set(b, elem);
     }
 
-
     private static void subtractLines(final Table a, final List<Double> b, final int i) {
         for (int j = i + 1; j < a.size(); ++j) {
             final double t = a.get(j, i) / a.get(i, i);
@@ -60,7 +59,7 @@ public class GaussMethod {
         }
     }
 
-    private static List<Double> backSubstitution(final Table a, final List<Double> b) {
+    static List<Double> backSubstitution(final Table a, final List<Double> b) {
         final List<Double> x = new ArrayList<>(Collections.nCopies(b.size(), null));
         x.set(a.size() - 1, b.get(b.size() - 1) / a.get(a.size() - 1, a.size() - 1));
         for (int k = a.size() - 2; k >= 0; --k) {
@@ -74,10 +73,10 @@ public class GaussMethod {
     }
 
     public static List<Double> run(final Table a, final List<Double> b) {
-        forwardElimination(a, b);
-        Tester.printTable(a);
+        forwardEliminationWithMax(a, b);
+//        Tester.printTable(a);
         final List<Double> list = backSubstitution(a, b);
-        System.out.println(list);
+//        System.out.println(list);
         return list;
     }
 
