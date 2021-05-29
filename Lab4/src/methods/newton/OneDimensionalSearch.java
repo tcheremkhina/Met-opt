@@ -8,16 +8,16 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public class OneDimensionalSearch {
-    protected final BiFunction<Table, Vector, Vector> soleMethod;
-    protected final BrentsMethod method;
+public class OneDimensionalSearch extends DefaultNewtonMethod {
+    protected final BrentsMethod method = new BrentsMethod(1e-6);
 
-    public OneDimensionalSearch(
-            final BiFunction<Table, Vector, Vector> soleMethod,
-            final BrentsMethod method
-    ) {
-        this.soleMethod = soleMethod;
-        this.method = method;
+    public OneDimensionalSearch(final BiFunction<Table, Vector, Vector> soleMethod) {
+        super(soleMethod);
+    }
+
+    protected double evaluateAlpha(
+            final Function<Vector, Double> function, final Vector x, final Vector p) {
+        return method.calc(alpha1 -> function.apply(x.add(p.multiply(alpha1))), 0, 100);
     }
 
     public Vector run(
@@ -27,17 +27,16 @@ public class OneDimensionalSearch {
             Vector x,
             final double epsilon
     ) {
-        Vector lastX = null;
-        while (lastX == null || lastX.subtract(x).abs() > epsilon) {
-            lastX = x;
-            final Vector gradX = grad.apply(x);
-            final Vector p = soleMethod.apply(hessian, gradX);
+        Vector deltaX = null;
+        System.out.println(x);
+        while (deltaX == null || deltaX.abs() > epsilon) {
+            final Vector p = evaluateP(grad.apply(x), hessian, x);
 
-            final Vector finalX = x;
-            final double alpha = method.calc(
-                    alpha1 -> function.apply(finalX.add(p.multiply(alpha1))), 0, 10);
-            x = x.add(p.multiply(alpha));
+            final double alpha = evaluateAlpha(function, x, p);
+            deltaX = p.multiply(alpha);
+            x = x.add(deltaX);
         }
+        System.out.println(x);
         return x;
     }
 }

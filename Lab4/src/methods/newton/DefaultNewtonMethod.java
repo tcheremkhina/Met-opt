@@ -13,17 +13,21 @@ public class DefaultNewtonMethod {
         this.soleMethod = soleMethod;
     }
 
+    protected Vector evaluateP(final Vector gradX, final Table hessian, final Vector x) {
+        return soleMethod.apply(hessian, gradX.negate());
+    }
+
     public Vector run(
             final Function<Vector, Vector> grad,
             final Table hessian,
             Vector x,
             final double epsilon
     ) {
-        Vector lastX = null;
+        Vector deltaX = null;
         System.out.println(x);
-        while (lastX == null || lastX.subtract(x).abs() > epsilon) {
-            lastX = x;
-            x = x.add(soleMethod.apply(hessian, grad.apply(x).negate()));
+        while (deltaX == null || deltaX.abs() > epsilon) {
+            deltaX = evaluateP(grad.apply(x), hessian, x);
+            x = x.add(deltaX);
         }
         System.out.println(x);
         return x;
