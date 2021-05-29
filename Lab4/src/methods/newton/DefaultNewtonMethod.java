@@ -19,14 +19,14 @@ public class DefaultNewtonMethod {
 
     public Vector run(
             final Function<Vector, Vector> grad,
-            final Table hessian,
+            final Function<Vector, Table> hessian,
             Vector x,
             final double epsilon
     ) {
         Vector deltaX = null;
         System.out.println(x);
         while (deltaX == null || deltaX.abs() > epsilon) {
-            deltaX = evaluateP(grad.apply(x), hessian, x);
+            deltaX = evaluateP(grad.apply(x), hessian.apply(x), x);
             x = x.add(deltaX);
         }
         System.out.println(x);

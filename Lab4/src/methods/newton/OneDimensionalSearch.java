@@ -23,14 +23,14 @@ public class OneDimensionalSearch extends DefaultNewtonMethod {
     public Vector run(
             final Function<Vector, Double> function,
             final Function<Vector, Vector> grad,
-            final Table hessian,
+            final Function<Vector, Table> hessian,
             Vector x,
             final double epsilon
     ) {
         Vector deltaX = null;
         System.out.println(x);
         while (deltaX == null || deltaX.abs() > epsilon) {
-            final Vector p = evaluateP(grad.apply(x), hessian, x);
+            final Vector p = evaluateP(grad.apply(x), hessian.apply(x), x);
 
             final double alpha = evaluateAlpha(function, x, p);
             deltaX = p.multiply(alpha);
