@@ -11,6 +11,11 @@ public class Vector {
         this.point = point;
     }
 
+
+    public static Vector of(final Double... data) {
+        return new Vector(List.of(data));
+    }
+
     public List<Double> getPoint() {
         return point;
     }

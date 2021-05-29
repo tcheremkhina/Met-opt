@@ -1,5 +1,6 @@
 package methods.newton;
 
+import tools.Table;
 import tools.Vector;
 
 import java.util.List;
@@ -7,18 +8,18 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class DescentOptimisation extends DefaultNewtonMethod {
-    public DescentOptimisation(final BiFunction<List<List<Double>>, Vector, Vector> soleMethod) {
+    public DescentOptimisation(final BiFunction<Table, Vector, Vector> soleMethod) {
         super(soleMethod);
     }
 
     @Override
     public Vector run(
             final Function<Vector, Vector> grad,
-            final List<List<Double>> hessian,
-            final Vector start,
+            final Table hessian,
+            Vector x,
             final double epsilon
     ) {
-        Vector lastX = null, x = start;
+        Vector lastX = null;
         while (lastX == null || lastX.subtract(x).abs() > epsilon) {
             lastX = x;
             final Vector gradX = grad.apply(x);

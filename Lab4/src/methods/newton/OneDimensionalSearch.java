@@ -1,6 +1,7 @@
 package methods.newton;
 
 import methods.one_dimentional.BrentsMethod;
+import tools.Table;
 import tools.Vector;
 
 import java.util.List;
@@ -8,11 +9,11 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class OneDimensionalSearch {
-    protected final BiFunction<List<List<Double>>, Vector, Vector> soleMethod;
+    protected final BiFunction<Table, Vector, Vector> soleMethod;
     protected final BrentsMethod method;
 
     public OneDimensionalSearch(
-            final BiFunction<List<List<Double>>, Vector, Vector> soleMethod,
+            final BiFunction<Table, Vector, Vector> soleMethod,
             final BrentsMethod method
     ) {
         this.soleMethod = soleMethod;
@@ -22,11 +23,11 @@ public class OneDimensionalSearch {
     public Vector run(
             final Function<Vector, Double> function,
             final Function<Vector, Vector> grad,
-            final List<List<Double>> hessian,
-            final Vector start,
+            final Table hessian,
+            Vector x,
             final double epsilon
     ) {
-        Vector lastX = null, x = start;
+        Vector lastX = null;
         while (lastX == null || lastX.subtract(x).abs() > epsilon) {
             lastX = x;
             final Vector gradX = grad.apply(x);
