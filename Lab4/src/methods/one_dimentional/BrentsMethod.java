@@ -57,9 +57,6 @@ public class BrentsMethod {
         while (true) {
             boolean isGSS = false;
 
-            if (Double.isNaN(minX)) {
-                System.out.println(123);
-            }
             if (isBadChoose(x1, x3, x2, minX, preLast)) {
                 isGSS = true;
 
@@ -70,9 +67,6 @@ public class BrentsMethod {
                     minX = x2 - R1 * (x2 - x1);
                 }
 
-                if (Double.isNaN(minX)) {
-                    System.out.println(123);
-                }
                 fMinX = f.applyAsDouble(minX);
             }
             if (compare(x2, minX)) {
@@ -101,7 +95,7 @@ public class BrentsMethod {
             }
 
             if (Double.isNaN(minX)) {
-                System.out.println(123);
+                throw new RuntimeException("Brent failed");
             }
             final double delta;
             if (isGSS) {

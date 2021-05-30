@@ -20,12 +20,11 @@ public class DescentOptimisation extends OneDimensionalSearch {
             final double epsilon
     ) {
         Vector deltaX = null;
-        System.out.println(x);
         while (deltaX == null || deltaX.abs() > epsilon) {
             final Vector gradX = grad.apply(x);
-            Vector p = evaluateP(gradX, hessian.apply(x), x);
+            Vector p = evaluateP(gradX, hessian.apply(x));
             if (p.scalar(gradX) > 0) {
-                System.out.println(" p * gradX > 0 ");
+                System.out.println(" p * gradX > 0 " + x);
                 p = gradX.negate();
             }
 
@@ -33,7 +32,6 @@ public class DescentOptimisation extends OneDimensionalSearch {
             deltaX = p.multiply(alpha);
             x = x.add(deltaX);
         }
-        System.out.println(x);
         return x;
     }
 }
