@@ -1,4 +1,4 @@
-package elements;
+package tools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,11 @@ public class Vector {
 
     public Vector(final List<Double> point) {
         this.point = point;
+    }
+
+
+    public static Vector of(final Double... data) {
+        return new Vector(List.of(data));
     }
 
     public List<Double> getPoint() {
@@ -73,7 +78,7 @@ public class Vector {
     @Override
     public String toString() {
         return "Point{" +
-                point.stream().map(d -> String.format("%.7f", d)).collect(Collectors.joining("; ")) +
+                point.stream().map(d -> String.format("%.17f", d)).collect(Collectors.joining("; ")) +
                 "}";
     }
 }

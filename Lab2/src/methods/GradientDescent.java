@@ -5,32 +5,49 @@ import elements.Vector;
 
 public class GradientDescent {
     private final double epsilon;
+    private final double alpha;
 
-    public GradientDescent(final double epsilon) {
+    public GradientDescent(final double epsilon, final double alpha) {
         this.epsilon = epsilon;
+        this.alpha = alpha;
     }
 
-    public void calc(final MyFunction function, Vector x) {
-        Vector y, gradientFX = function.applyGradient(x);
-        Double fy, fx = null;
-        double alpha = 1;
-        System.out.println("gradient abs: " + gradientFX.abs());
-        while (epsilon < gradientFX.abs()) {
-            fx = function.applyFunction(x);
+    public int calc(final MyFunction function, Vector x) {
+        Vector gradientFX = function.applyGradient(x);
+        Vector y = null;
+        Double fx = function.applyFunction(x);
+        Double fy;
+        Vector lastX = x;
+        double lastFX = fx;
+        int sch = 0;
+        double alpha2 = alpha;
+        while (alpha2 > 1e-9 && epsilon < gradientFX.abs()
+                && (y == null ||
+                (Math.abs(fx - lastFX) > epsilon
+                        && lastX.subtract(x).abs() > epsilon
+                        && sch < 10_000))) {
+            sch++;
             do {
-                y = x.subtract(gradientFX.multiply(alpha));
+                y = x.subtract(gradientFX.multiply(alpha2));
                 fy = function.applyFunction(y);
                 if (fy >= fx) {
-                    alpha /= 2;
+                    alpha2 /= 2;
+                }
+                if (alpha2 < 1e-9) {
+                    System.out.println("\nalpha is 0\n");
+                    y = x;
+                    fy = fx;
+                    break;
                 }
             } while (fy >= fx);
+            lastFX = fx;
+            lastX = x;
             x = y;
             fx = fy;
             gradientFX = function.applyGradient(x);
-            System.out.println(String.format("%s val: %.10f", x, fx));
-            System.out.println("gradient abs: " + gradientFX.abs());
         }
-
-        System.out.println(String.format("Result:\n%s val: %.10f", x, fx));
+        System.out.println("\niterations count: " + sch);
+        System.out.println(String.format("Result:\n%s \nval: %.10f\n", x, fx));
+        return sch;
     }
 }
