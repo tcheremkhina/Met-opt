@@ -122,24 +122,6 @@ public class Main {
                 -10 * (v.get(2) - v.get(3)) - 40 * (v.get(0) - v.get(3)) * (v.get(0) - v.get(3)) * (v.get(0) - v.get(3))
                 );
         final Function<Vector, Table> hessian = v -> new TableImpl(
-                /*
-                List.of(List.of(2 + 120 * calc(v, 0, 2) -240 * v.get(0) * v.get(3),
-                                20.,
-                                0.,
-                                120 * calc(v, 3, 2) + 240 * v.get(0) * v.get(3) - 120 * calc(v, 0, 2)),
-                        List.of(20.,
-                                200. + 48 * calc(v, 2, 2) - 48 * v.get(1) * v.get(2),
-                                24 * v.get(1) * v.get(2) - 8 * v.get(2) - 8 * v.get(1),
-                                0.),
-                        List.of(0.,
-                                -96 * calc(v, 2, 2) + 96 * v.get(1) * v.get(2) - 16 * v.get(1),
-                                10. - 192 * v.get(1) * v.get(2) + 48 * calc(v, 1, 2) + 192 * calc(v, 2, 2),
-                                -10.),
-                        List.of(120 * calc(v, 3, 2) + 240 * v.get(0) * v.get(3) - 120 * calc(v, 0, 2), 0.,
-                                -10.,
-                                10. + 120 * calc(v, 3, 2) - 240 * v.get(0) * v.get(3) + 120 * calc(v, 0, 2)
-                        ))
-                 */
                 List.of(List.of(2 + 120 * (v.get(0) - v.get(3)) * (v.get(0) - v.get(3)),
                                 20.,
                                 0.,
