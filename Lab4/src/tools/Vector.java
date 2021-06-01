@@ -13,7 +13,7 @@ public class Vector {
 
 
     public static Vector of(final Double... data) {
-        return new Vector(List.of(data));
+        return new Vector(new ArrayList<>(List.of(data)));
     }
 
     public List<Double> getPoint() {
@@ -26,6 +26,10 @@ public class Vector {
 
     public Double get(final int index) {
         return point.get(index);
+    }
+
+    public void set(final int i, final double v) {
+        point.set(i, v);
     }
 
     public Vector multiply(final double mul) {
