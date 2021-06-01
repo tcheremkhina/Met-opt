@@ -3,8 +3,12 @@ import methods.gauss.GaussMethod;
 import methods.newton.DefaultNewtonMethod;
 import methods.newton.DescentOptimisation;
 import methods.newton.OneDimensionalSearch;
+import methods.one_dimentional.BrentsMethod;
+import methods.one_dimentional.Dichotomy;
+import methods.quasinewton.BFShMethod;
+import methods.quasinewton.PowellMethod;
 import tools.Table;
-import tools.TableImpl;
+import tools.*;
 import tools.Vector;
 
 import java.util.List;
@@ -14,6 +18,8 @@ public class Main {
     final DefaultNewtonMethod method = new DefaultNewtonMethod(GaussMethod::calc);
     final OneDimensionalSearch method2 = new OneDimensionalSearch(GaussMethod::calc);
     final DescentOptimisation method3 = new DescentOptimisation(GaussMethod::calc);
+    final BFShMethod method4 = new BFShMethod(new BrentsMethod(1e-3));
+    final PowellMethod method5 = new PowellMethod(new BrentsMethod(1e-3));
     final FastestDescent fastestDescent = new FastestDescent(1000);
 
     private static double calc(final Vector v, final int pos, final int pow) {
@@ -39,6 +45,10 @@ public class Main {
         printResult(function, grad, method2.run(function, grad, hessian, x, epsilon));
         System.out.println("DescentOptimisation: ");
         printResult(function, grad, method3.run(function, grad, hessian, x, epsilon));
+        System.out.println("BFShMethod: ");
+        printResult(function, grad, method4.run(function, grad, x, epsilon));
+        System.out.println("PowellMethod: ");
+        printResult(function, grad, method5.run(function, grad, x, epsilon));
         System.out.println("FastestDescent: ");
         printResult(function, grad, fastestDescent.run(function, grad, x, epsilon));
     }
@@ -87,6 +97,6 @@ public class Main {
 
     public static void main(final String[] args) {
         final Main main = new Main();
-        main.test_02();
-    }
+        main.test_01();
+
 }
