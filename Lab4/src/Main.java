@@ -162,29 +162,6 @@ public class Main {
         test(function, grad, hessian, x, epsilon);
     }
 
-
-    private void test_05() {
-        final Function<Vector, Double> function = v -> 100.
-                - 2. / ((1. + ((v.get(0) - 1) / 2) * ((v.get(0) - 1) / 2)) + ((v.get(1) - 1) / 3) * ((v.get(1) - 1) / 3))
-                - 2. / ((1. + ((v.get(0) - 2) / 2) * ((v.get(0) - 2) / 2)) + ((v.get(1) - 1) / 3) * ((v.get(1) - 1) / 3));
-        final Function<Vector, Vector> grad = v -> Vector.of(
-                2. * (v.get(0) - 1) / (((1. + ((v.get(0) - 1) / 2) * ((v.get(0) - 1) / 2)) + ((v.get(1) - 1) / 3) * ((v.get(1) - 1) / 3))
-                        * ((1. + ((v.get(0) - 1) / 2) * ((v.get(0) - 1) / 2)) + ((v.get(1) - 1) / 3) * ((v.get(1) - 1) / 3)))
-                + 2. * (v.get(0) - 2) / (((1. + ((v.get(0) - 2) / 2) * ((v.get(0) - 2) / 2)) + ((v.get(1) - 1) / 3) * ((v.get(1) - 1) / 3))
-                                * ((1. + ((v.get(0) - 2) / 2) * ((v.get(0) - 2) / 2)) + ((v.get(1) - 1) / 3) * ((v.get(1) - 1) / 3))),
-                4. / 3. * (v.get(1) - 1) / (((1. + ((v.get(0) - 1) / 2) * ((v.get(0) - 1) / 2)) + ((v.get(1) - 1) / 3) * ((v.get(1) - 1) / 3))
-                        * ((1. + ((v.get(0) - 1) / 2) * ((v.get(0) - 1) / 2)) + ((v.get(1) - 1) / 3) * ((v.get(1) - 1) / 3)))
-                + 4. / 3. * (v.get(0) - 2) / (((1. + ((v.get(0) - 2) / 2) * ((v.get(0) - 2) / 2)) + ((v.get(1) - 1) / 3) * ((v.get(1) - 1) / 3))
-                                * ((1. + ((v.get(0) - 2) / 2) * ((v.get(0) - 2) / 2)) + ((v.get(1) - 1) / 3) * ((v.get(1) - 1) / 3))));
-        final Function<Vector, Table> hessian = v -> new TableImpl(
-                List.of(List.of(12 * calc(v, 0, 2) + 4 * v.get(1) - 42., 4 * v.get(0) + 4 * v.get(1)),
-                        List.of(4 * v.get(0) + 4 * v.get(1), 13 * calc(v, 1, 2) + 4 * v.get(0) - 26.))
-        );
-        final Vector x = Vector.of(5., 5.);
-        final double epsilon = 1e-7;
-        test(function, grad, hessian, x, epsilon);
-    }
-
     public static void main(final String[] args) {
         final Main main = new Main();
         main.test_04();
